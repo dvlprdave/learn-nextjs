@@ -17,7 +17,7 @@ Move into any folder you'd like to store your Next.js project in and then add th
 
 ### Adding scripts 
 
-If you head into your `package.json` file, you'll see `scripts`. The only thing should see is a test script. Let's add to it to help us run and build our project when the time comes.
+If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add to it to help us run and build our project when the time comes.
 
 In addition to the test script, add the following into your `scripts` : 
 
@@ -58,7 +58,7 @@ Run our server to view our component by running the following command:
 ```shell
   npm run dev
 ```
-You should be promted that the server is ready on []( http://localhost:3000). If you visit the link, you should see the Index page with "Hello Next.js" as its contents.
+You should be promted that the server is ready on [http://localhost:3000]( http://localhost:3000). If you visit the link, you should see the Index page with "Hello Next.js" as its contents.
 
 ### Routes and Page Navigation
 
@@ -83,7 +83,7 @@ export default function About() {
 }
 
 ```
-We can view the page by heading to [](http://localhost:3000/about).
+We can view the page by heading to [http://localhost:3000](http://localhost:3000/about).
 
 ### Linking Pages
 
