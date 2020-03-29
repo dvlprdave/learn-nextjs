@@ -1,23 +1,23 @@
 # Next.js Notes
 
-## Creating a Next.js project
+## Creating a Next.js app
 
-Move into any folder you'd like to store your Next.js project in and then add the following lines in your terminal:
+Move into any folder you'd like to store your Next.js app in and then add the following lines in your terminal:
 
 ```shell
-  mkdir next-project
-  cd next-project
+  mkdir next-app
+  cd next-app
   npm init -y
   npm install --save react react-dom next
 ```
-- mkdir next-project (creates a new folder in your current directory called "next-project")
-- cd next-project (moves into the project directory)
+- mkdir next-app (creates a new folder in your current directory called "next-app")
+- cd next-app (moves into the newly created app directory)
 - npm init -y (creates package.json)
 - npm i -y (installs react, react-dom, and next as dependencies)
 
 ### Adding scripts 
 
-If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add to it to help us run and build our project when the time comes.
+If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add to it to help us run and build our app when the time comes.
 
 In addition to the test script, add the following into your `scripts` : 
 
@@ -29,7 +29,8 @@ In addition to the test script, add the following into your `scripts` :
 
 ### Pages
 
-We need to create a pages directory in the root of our project so Next knows what's going to be displayed.
+We need to create a pages directory in the root of our app so Next knows what's going to be displayed.
+
 > Pages is a special directory seen by Next.
 
 Go ahead and create the directory and an initial page by adding the following into your terminal: 
@@ -39,7 +40,7 @@ Go ahead and create the directory and an initial page by adding the following in
   cd pages
   touch index.js
 ```
-> "touch" cretes a file in our current sitting directory. You can simply add the file manually in your current editor if you'd like, but I find using the terminal a bit faster.
+> "touch" creates a file in our current sitting directory. You can simply add the file manually in your current editor if you'd like, but I find using the terminal a bit faster.
 
 ### Building our first page
 
@@ -48,7 +49,7 @@ Within index.js add the following:
 ```javascript
   const Index = () => (
     <div>
-      <p>My first Next.js project</p>
+      <p>My first Next.js app</p>
     </div>
   );
 
@@ -67,7 +68,7 @@ You should be promted that the server is ready on [http://localhost:3000]( http:
 
 Let's add more pages and navigate between them. Next.js provides us with a simple and fast way to do this using the `Link` component from `next/Link`. 
 
-We can use it by adding an additional page to our project by doing the following: 
+We can use it by adding an additional page to our app by doing the following: 
 
 > Make sure you're currently sitting in the pages directory.
 
@@ -101,7 +102,7 @@ If you head back into the index page `pages/index.js`, we can implement the `Lin
       <Link href="/about">
         <a>About Page</a>
       </Link>
-      <p>My first Next.js project</p>
+      <p>My first Next.js app</p>
     </div>
     );
 
@@ -130,7 +131,7 @@ If you visit the index page [http://localhost:3000](http://localhost:3000), you 
 
 ### Reusable/Shared Components
 
-Components are a crucial part of creating reausable peaces throughout your project that stay constant. For example, a Header component or a Navigation component that is seen on every page. 
+Components are a crucial part of creating reausable peaces throughout your app that stay constant. For example, a Header component or a Navigation component that is seen on every page. 
 
 Let's start by creating a folder that stores our components and add a Header component to it. In your root directory, create a `components` folder: 
 
@@ -173,7 +174,7 @@ To get the full idea on how this component can be reusable, add the component to
   const Index = () => (
       <div>
         <Header />
-        <p>My first Next.js project</p>
+        <p>My first Next.js app</p>
       </div>
   );
 
@@ -181,3 +182,40 @@ To get the full idea on how this component can be reusable, add the component to
 ```
 
 You should now see the `Header` component on both pages and be able to link back and forth between each link.
+
+## Layouts
+
+Taking the concept above of reusable components, we can apply a global layout to our app.
+
+In the root of our app, create a `layout` folder followed by a `layout.js` file. This will hold our `Layout` component and any other associations to our layout we decide to add.
+
+```shell
+  mkdir layouts
+  touch layouts.js
+```
+Drop the following lines of code into the `layout.js` file to create our component: 
+
+```javascript
+  import Header from '../components/header';
+
+  const layoutStyle = {
+    margin: '2rem',
+    padding: '2rem',
+    border: '1px solid #000'
+  };
+
+  const Layout = (props) => (
+    <div style={layoutStyle}>
+      <Header />
+      {props.children}
+    </div>
+  );
+
+  export default Layout;
+```
+
+Our `layout.js` file is fairly basic. We've imported the `Header` component as it will be passed along with our `Layout` component. Then we have a styles object containing basic styles followed by our `Layout` component itself. 
+
+The `Layout` will render any component and its contents that it wraps via `props.children`.
+
+> Make sure to remove the `import` statement and the `Header` itself from both our `Index` and `About` components since it will now be passed via our `Layout` component.
