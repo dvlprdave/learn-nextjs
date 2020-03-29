@@ -1,7 +1,10 @@
-export default function About() {
-  return (
-    <div>
-      <p>This is the about page</p>
-    </div>
-  );
-}
+import Header from "../components/header"
+
+const About = () => (
+  <div>
+    <Header />
+    <p>This is the about page</p>
+  </div>
+)
+
+export default About

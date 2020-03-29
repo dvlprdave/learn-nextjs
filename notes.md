@@ -29,7 +29,10 @@ In addition to the test script, add the following into your `scripts` :
 
 ### Pages
 
-We need to create a pages directory in the root of our project so Next knows what's going to be displayed. Go ahead and create the directory and an initial page by adding the following into your terminal: 
+We need to create a pages directory in the root of our project so Next knows what's going to be displayed.
+> Pages is a special directory seen by Next.
+
+Go ahead and create the directory and an initial page by adding the following into your terminal: 
 
 ```shell
   mkdir pages
@@ -38,18 +41,18 @@ We need to create a pages directory in the root of our project so Next knows wha
 ```
 > "touch" cretes a file in our current sitting directory. You can simply add the file manually in your current editor if you'd like, but I find using the terminal a bit faster.
 
-## Building our first page
+### Building our first page
 
 Within index.js add the following: 
 
 ```javascript
-  export default function Index() {
-  return (
+  const Index = () => (
     <div>
       <p>My first Next.js project</p>
     </div>
   );
-}
+
+export default Index;
 ```
 This creates a basic React component (make sure it's exported as default).
 
@@ -74,14 +77,13 @@ touch about.js
 Within the `about.js` file, create a new component by adding the following: 
 
 ```javascript
-export default function About() {
-  return (
-    <div>
-      <p>This is the about page</p>
-    </div>
-  );
-}
+const About = () => (
+  <div>
+    <p>This is the about page</p>
+  </div>
+);
 
+export default About;
 ```
 We can view the page by heading to [http://localhost:3000](http://localhost:3000/about).
 
@@ -94,16 +96,16 @@ If you head back into the index page `pages/index.js`, we can implement the `Lin
 ```javascript
   import Link from 'next/link';
 
-  export default function Index() {
-    return (
-      <div>
-        <Link href="/about">
-          <a>About Page</a>
-        </Link>
-        <p>My first Next.js project</p>
-      </div>
+  const Index = () => (
+    <div>
+      <Link href="/about">
+        <a>About Page</a>
+      </Link>
+      <p>My first Next.js project</p>
+    </div>
     );
-  }
+
+  export default Index;
 ```
 
 Only two things have changed. We imported the `Link` component from 'next/link`: 
@@ -121,6 +123,61 @@ Then, we used the `Link` component that takes in an `href` prop which leads to o
 ```
 
 
-If you visit the index page [](http://localhost:3000/about), you should now see an "About Page" link. If you click it, you should be taken to the "About" page.
+If you visit the index page [http://localhost:3000](http://localhost:3000), you should now see an "About Page" link. If you click it, you should be taken to the "About" page.
 
-> More on Links on the [`next/link` docs](https://nextjs.org/docs/api-reference/next/link).
+> More on Links on [`next/link`](https://nextjs.org/docs/api-reference/next/link).
+
+
+### Reusable/Shared Components
+
+Components are a crucial part of creating reausable peaces throughout your project that stay constant. For example, a Header component or a Navigation component that is seen on every page. 
+
+Let's start by creating a folder that stores our components and add a Header component to it. In your root directory, create a `components` folder: 
+
+```shell
+  mkdir components
+```
+
+Then, go ahead and create a `header.js` file within the `components` folder and add the folowing code to the file:
+
+```javascript
+  import Link from 'next/link';
+
+  const linkStyle = {
+    marginRight: 15
+  };
+
+  const Header = () => (
+    <div>
+      <Link href="/">
+        <a style={linkStyle}>Home</a>
+      </Link>
+      <Link href="/about">
+        <a style={linkStyle}>About</a>
+      </Link>
+    </div>
+  );
+
+  export default Header;
+```
+
+Above, our `Header` component uses `Link` to display a `home` and `about` link allowing us to navigate between the two wherever we place the `Header` component. 
+
+You'll also notice `linkStyles`. This is simply a defined styles object used to space out our links. 
+
+To get the full idea on how this component can be reusable, add the component to both the `Index` and `About` page like so: 
+
+```javascript
+  import Header from '../components/header';
+
+  const Index = () => (
+      <div>
+        <Header />
+        <p>My first Next.js project</p>
+      </div>
+  );
+
+  export default Index;
+```
+
+You should now see the `Header` component on both pages and be able to link back and forth between each link.

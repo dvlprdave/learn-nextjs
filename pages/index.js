@@ -1,13 +1,10 @@
-// Link is a module within next that handles routing
-import Link from 'next/link';
+import Header from '../components/header';
 
-export default function Index() {
-  return (
+const Index = () => (
     <div>
-      <Link href="/about">
-        <a>About Page</a>
-      </Link>
-      <p>My first Next.js projec</p>
+      <Header />
+      <p>My first Next.js project</p>
     </div>
-  );
-}
+);
+
+export default Index;
