@@ -1,9 +1,23 @@
-import Layout from '../layout/layout';
+import Layout from '../layout/Layout';
+import Link from 'next/link';
 
-const Index = () => (
-    <Layout>
-      <p>My first Next.js project</p>
-    </Layout>
-);
+  const PostLink = ({title}) => (
+    <li>
+      <Link href={`/post?title=${title}`}>
+        <a>{title}</a>
+      </Link>
+    </li>
+  );
 
-export default Index;
+   const Blog = () => (
+      <Layout>
+        <h1>My Blog</h1>
+        <ul>
+          <PostLink title="Hello Next.js" />
+          <PostLink title="Learn Next.js is awesome" />
+          <PostLink title="Deploy apps with Zeit" />
+        </ul>
+      </Layout>
+    );
+
+  export default Blog

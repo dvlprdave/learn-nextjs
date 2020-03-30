@@ -17,9 +17,7 @@ Move into any folder you'd like to store your Next.js app in and then add the fo
 
 ### Adding scripts 
 
-If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add to it to help us run and build our app when the time comes.
-
-In addition to the test script, add the following into your `scripts` : 
+If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add the following within `Scripts` to help us run and build our app when the time comes:
 
 ```
   "dev": "next",
@@ -219,3 +217,67 @@ Our `layout.js` file is fairly basic. We've imported the `Header` component as i
 The `Layout` will render any component and its contents that it wraps via `props.children`.
 
 > Make sure to remove the `import` statement and the `Header` itself from both our `Index` and `About` components since it will now be passed via our `Layout` component.
+
+## Dynamic Pages
+
+In your app, you want to have different views for a user depending on their needs. With dynamic dynamic pages and content, we can achieve this. Let's build a simple blog app with dynamic pages. 
+
+You can toss out what we have for now in our `Index` component and add the following:
+
+> We'll be sitting in `pages/index.js`
+
+```javascript
+  import Layout from '../components/MyLayout';
+  import Link from 'next/link';
+
+  const PostLink = ({title}) => (
+    <li>
+      <Link href={`/post?title=${title}`}>
+        <a>{title}</a>
+      </Link>
+    </li>
+  );
+
+   const Blog = () => (
+      <Layout>
+        <h1>My Blog</h1>
+        <ul>
+          <PostLink title="Hello Next.js" />
+          <PostLink title="Learn Next.js is awesome" />
+          <PostLink title="Deploy apps with Zeit" />
+        </ul>
+      </Layout>
+    );
+
+  export default Blog
+```
+
+Our `Blog` component is a simple list of inidividual blog posts which are represented by `PostLink`. Each `PostLink` takes in a `title` prop which is used as the parameter to the query string wihtin the `Link` component.
+
+```javascript
+  <Link href={`/post?title=${title}`}>
+```
+
+This is how our dynamic data gets passed. What's happening is the post title path `${title}` will be equal to the contents of the `title` prop in our `PostLink`.
+
+### Create Individual Post Page
+
+Currently, if you click on any of our posts, you'll be greated by "404 This page could not be found." This is because there is no associated page for our posts. Let's fix that by creating a `Post` page - `post.js` in the `pages` directory and adding the following to the page: 
+
+```javascript
+  import { useRouter } from 'next/router';
+  import Layout from '../components/MyLayout';
+
+  const Post = () => {
+    const router = useRouter();
+
+    return (
+      <Layout>
+        <h1>{router.query.title}</h1>
+        <p>This is the blog post content.</p>
+      </Layout>
+    );
+  };
+
+  export default Page;
+```
