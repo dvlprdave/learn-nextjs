@@ -266,7 +266,7 @@ Currently, if you click on any of our posts, you'll be greated by "404 This page
 
 ```javascript
   import { useRouter } from 'next/router';
-  import Layout from '../components/MyLayout';
+  import Layout from '../layout/layout';
 
   const Post = () => {
     const router = useRouter();
@@ -279,5 +279,17 @@ Currently, if you click on any of our posts, you'll be greated by "404 This page
     );
   };
 
-  export default Page;
+  export default Post;
 ```
+
+Above, you'll notice something new `useRouter`.
+
+`useRouter` is a React hook that exposes the `router` object and allows us to use its [features](https://nextjs.org/docs/api-reference/next/router#userouter). 
+
+After importing `useRouter` we're saving its call into a variable called `router` and then using it to grab the `guery.title` we set in our `Link` back in `index.js`. 
+
+`query` is simply an object returned by the exposed `router` object we imported. 
+
+
+
+
