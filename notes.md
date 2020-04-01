@@ -2,34 +2,45 @@
 
 ## Creating a Next.js app
 
+There are two ways you can spin up a Next.js app. 
+
+- Create Next App via [npx](https://nextjs.org/blog/create-next-app).
+- Setting up a barebones Next app from scratch.
+
+We'll be going with the later as it gives us a better understanding of setting up Next.js for initial use. 
+
+### Getting Started
+
 Move into any folder you'd like to store your Next.js app in and then add the following lines in your terminal:
 
 ```shell
-  mkdir next-app
-  cd next-app
+  mkdir helo-next
+  cd helo-next
   npm init -y
   npm install --save react react-dom next
 ```
-- mkdir next-app (creates a new folder in your current directory called "next-app")
-- cd next-app (moves into the newly created app directory)
+- mkdir helo-next (creates a new folder in your current directory called "helo-next")
+- cd helo-next (moves into the newly created app directory)
 - npm init -y (creates package.json)
 - npm i -y (installs react, react-dom, and next as dependencies)
 
-### Adding scripts 
+### Adding Scripts 
 
 If you head into your `package.json` file, you'll see `scripts`. The only thing you should see is a test script. Let's add the following within `Scripts` to help us run and build our app when the time comes:
 
-```
+```js
+"scripts": {
   "dev": "next",
   "build": "next build",
   "start": "next start",
+}
 ```
 
 ### Pages
 
 We need to create a pages directory in the root of our app so Next knows what's going to be displayed.
 
-> Pages is a special directory seen by Next.
+> Pages is a special directory seen by Next and is an essential directory.
 
 Go ahead and create the directory and an initial page by adding the following into your terminal: 
 
@@ -44,7 +55,7 @@ Go ahead and create the directory and an initial page by adding the following in
 
 Within index.js add the following: 
 
-```javascript
+```js
   const Index = () => (
     <div>
       <p>My first Next.js app</p>
@@ -53,6 +64,7 @@ Within index.js add the following:
 
 export default Index;
 ```
+
 This creates a basic React component (make sure it's exported as default).
 
 Run our server to view our component by running the following command: 
@@ -71,28 +83,28 @@ We can use it by adding an additional page to our app by doing the following:
 > Make sure you're currently sitting in the pages directory.
 
 ```shell 
-touch about.js
+  touch about.js
 ```
 Within the `about.js` file, create a new component by adding the following: 
 
-```javascript
-const About = () => (
-  <div>
-    <p>This is the about page</p>
-  </div>
-);
+```js
+  const About = () => (
+    <div>
+      <p>This is the about page</p>
+    </div>
+  );
 
-export default About;
+  export default About;
 ```
 We can view the page by heading to [http://localhost:3000](http://localhost:3000/about).
 
 ### Linking Pages
 
-We've set up two individual pages sp far, but in order to link them, we need to use the `Link` component mentioned earlier. 
+We've set up two individual pages so far, but in order to link them, we need to use the `Link` component mentioned earlier. 
 
-If you head back into the index page `pages/index.js`, we can implement the `Link` by removing what he had in the file and adding the following: 
+Head back into the index page `pages/index.js`, delete its contents, and add the following lines: 
 
-```javascript
+```js
   import Link from 'next/link';
 
   const Index = () => (
@@ -109,27 +121,27 @@ If you head back into the index page `pages/index.js`, we can implement the `Lin
 
 Only two things have changed. We imported the `Link` component from 'next/link`: 
 
-```javascript
+```js
   import Link from 'next/link';
 ```
 
 Then, we used the `Link` component that takes in an `href` prop which leads to our `about` page: 
 
-```javascript
+```js
   <Link href="/about">
     <a>About Page</a>
   </Link>
 ```
 
 
-If you visit the index page [http://localhost:3000](http://localhost:3000), you should now see an "About Page" link. If you click it, you should be taken to the "About" page.
+If you visit the index page [http://localhost:3000](http://localhost:3000), you should now see an "About Page" link. If you click it, you'll be taken to the "About" page.
 
 > More on Links on [`next/link`](https://nextjs.org/docs/api-reference/next/link).
 
 
 ### Reusable/Shared Components
 
-Components are a crucial part of creating reausable peaces throughout your app that stay constant. For example, a Header component or a Navigation component that is seen on every page. 
+Components are a crucial part of creating reausable peaces throughout your app that stay constant. For example, a Header component or a Footer component that is seen on every page. 
 
 Let's start by creating a folder that stores our components and add a Header component to it. In your root directory, create a `components` folder: 
 
@@ -139,7 +151,7 @@ Let's start by creating a folder that stores our components and add a Header com
 
 Then, go ahead and create a `header.js` file within the `components` folder and add the folowing code to the file:
 
-```javascript
+```js
   import Link from 'next/link';
 
   const linkStyle = {
@@ -160,13 +172,13 @@ Then, go ahead and create a `header.js` file within the `components` folder and 
   export default Header;
 ```
 
-Above, our `Header` component uses `Link` to display a `home` and `about` link allowing us to navigate between the two wherever we place the `Header` component. 
+Above, our `Header` component uses the `Link` component to display a `home` and `about` link allowing us to navigate between the two wherever we place the `Header` component. 
 
-You'll also notice `linkStyles`. This is simply a defined styles object used to space out our links. 
+You'll also notice `linkStyles`. This is simply a defined styles object used to space out our links.
 
 To get the full idea on how this component can be reusable, add the component to both the `Index` and `About` page like so: 
 
-```javascript
+```js
   import Header from '../components/header';
 
   const Index = () => (
@@ -179,13 +191,13 @@ To get the full idea on how this component can be reusable, add the component to
   export default Index;
 ```
 
-You should now see the `Header` component on both pages and be able to link back and forth between each link.
+You should now see the `Header` component on both pages and be able to link back and forth between each page.
 
 ## Layouts
 
 Taking the concept above of reusable components, we can apply a global layout to our app.
 
-In the root of our app, create a `layout` folder followed by a `layout.js` file. This will hold our `Layout` component and any other associations to our layout we decide to add.
+In the root of our app, create a `layout` folder followed by a `layout.js` file within the folder. This will hold our `Layout` component and any other associations to our layout we decide to add.
 
 ```shell
   mkdir layouts
@@ -193,13 +205,12 @@ In the root of our app, create a `layout` folder followed by a `layout.js` file.
 ```
 Drop the following lines of code into the `layout.js` file to create our component: 
 
-```javascript
+```js
   import Header from '../components/header';
 
   const layoutStyle = {
     margin: '2rem',
-    padding: '2rem',
-    border: '1px solid #000'
+    padding: '2rem'
   };
 
   const Layout = (props) => (
@@ -220,14 +231,14 @@ The `Layout` will render any component and its contents that it wraps via `props
 
 ## Dynamic Pages
 
-In your app, you want to have different views for a user depending on their needs. With dynamic dynamic pages and content, we can achieve this. Let's build a simple blog app with dynamic pages. 
+In your app, you'll want to have different views for a user depending on their needs. With dynamic pages and content, we can achieve this. Let's build a simple blog app with dynamic pages. 
 
 You can toss out what we have for now in our `Index` component and add the following:
 
 > We'll be sitting in `pages/index.js`
 
-```javascript
-  import Layout from '../components/MyLayout';
+```js
+  import Layout from '../layout/layout';
   import Link from 'next/link';
 
   const PostLink = ({title}) => (
@@ -238,33 +249,33 @@ You can toss out what we have for now in our `Index` component and add the follo
     </li>
   );
 
-   const Blog = () => (
-      <Layout>
-        <h1>My Blog</h1>
-        <ul>
-          <PostLink title="Hello Next.js" />
-          <PostLink title="Learn Next.js is awesome" />
-          <PostLink title="Deploy apps with Zeit" />
-        </ul>
-      </Layout>
-    );
+  const Blog = () => (
+    <Layout>
+      <h1>My Blog</h1>
+      <ul>
+        <PostLink title="Hello Next.js" />
+        <PostLink title="Learn Next.js" />
+        <PostLink title="Deploy apps" />
+      </ul>
+    </Layout>
+  );
 
   export default Blog
 ```
 
-Our `Blog` component is a simple list of inidividual blog posts which are represented by `PostLink`. Each `PostLink` takes in a `title` prop which is used as the parameter to the query string wihtin the `Link` component.
+Our `Blog` component is a simple list of inidividual blog posts which are represented by `PostLink`. Each `PostLink` takes in a `title` prop which is used as the parameter to the query string within the `Link` component.
 
-```javascript
+```js
   <Link href={`/post?title=${title}`}>
 ```
 
-This is how our dynamic data gets passed. What's happening is the post title path `${title}` will be equal to the contents of the `title` prop in our `PostLink`.
+This is how our dynamic data gets passed. What's happening is the post title path `${title}` will be equal to the contents of the `title` prop in our `PostLink` when the component renders.
 
 ### Create Individual Post Page
 
-Currently, if you click on any of our posts, you'll be greated by "404 This page could not be found." This is because there is no associated page for our posts. Let's fix that by creating a `Post` page - `post.js` in the `pages` directory and adding the following to the page: 
+Currently, if you click on any of our posts, you'll be greated by **"404 This page could not be found."** This is because there is no associated page for our posts. Let's fix that by creating a `Post` page by adding `post.js` in the `pages` directory and then adding the following code to the file: 
 
-```javascript
+```js
   import { useRouter } from 'next/router';
   import Layout from '../layout/layout';
 
@@ -282,7 +293,7 @@ Currently, if you click on any of our posts, you'll be greated by "404 This page
   export default Post;
 ```
 
-Above, you'll notice something new `useRouter`.
+Above, you'll notice something new.. `useRouter`.
 
 `useRouter` is a React hook that exposes the `router` object and allows us to use its [features](https://nextjs.org/docs/api-reference/next/router#userouter). 
 
@@ -290,6 +301,96 @@ After importing `useRouter` we're saving its call into a variable called `router
 
 `query` is simply an object returned by the exposed `router` object we imported. 
 
+## Dynamic Routing with Clean URL's
 
+Taking what we know about dynamic pages and using the `useRouter` hook, we can use dynamic routes.
 
+If you head over to the `Hello Next.js` post link, the URL should look like this:
 
+`http://localhost:3000/post?title=Hello%20Next.js`
+
+Rather ugly isn't it? We can clean it up by using dynamic routes. Go ahead and delete the `post.js` file in our `posts` directory since we won't be needing it anymore. 
+
+Once that's done, you can go ahead and do the following:
+
+- Add a folder called `posts` to the `pages` directory.
+- Within that `posts` folder add a file named `[id].js`.
+
+The bracking naming convention is as follows: 
+
+- Brackets instantly make the page a dynamic route.
+- File name within the brackers is simply a variable.
+- Whatever name you place within the bracket represents the query parameter for that page.
+
+Let's add some code to the `[id].js` file: 
+
+```js
+  import { useRouter } from 'next/router';
+  import Layout from '../../layout/layout';
+
+  const Post = () => {
+    const router = useRouter();
+
+    return (
+      <Layout>
+        <h1>{router.query.id}</h1>
+        <p>This is the blog post content.</p>
+      </Layout>
+    );
+  }
+
+  export default Post
+```
+In order to make use of our dynamic route, we need to change a few things. Head back into the `index.js`, remove its contents and add the following: 
+
+```js
+  import Layout from '../layout/layout';
+  import Link from 'next/link';
+
+  const PostLink = ({id) => (
+    <li>
+      <Link href="/posts/[id]" as={`/posts/${id}`}>
+        <a>{id}</a>
+      </Link>
+    </li>
+  );
+
+  const Blog = () => (
+    <Layout>
+      <h1>My Blog</h1>
+      <ul>
+        <PostLink id="Hello Next.js" />
+        <PostLink id="Learn Next.js" />
+        <PostLink id="Deploy apps" />
+      </ul>
+    </Layout>
+  );
+
+  export default Blog
+```
+
+We essentialy have the same code as before with the exception of a few changes. 
+
+- The `href` value in the `Link` component now takes the path of our dynamic route page.
+
+- The parameter for the `query` string and the contents of the `<a>` tag take in the `id`.
+
+- We use the `as` prop which is apart of the Router API to define the route that gets displayed as the browser URL.
+
+```js
+  <Link href="/posts/[id]" as={`/posts/${id}`}>
+    <a>{id}</a>
+  </Link> 
+```
+
+Also, all of our `PostLink` attributes have changed from `title=` to `id=` in order to represent our `query`.
+
+```js
+  <PostLink id="Hello Next.js" />
+  <PostLink id="Learn Next.js" />
+  <PostLink id="Deploy apps" />
+```
+
+If you click on the `Hello Next.js` post again, the URL should now look like this: 
+
+`http://localhost:3000/posts/Hello%20Next.js`

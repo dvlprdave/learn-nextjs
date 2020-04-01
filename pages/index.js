@@ -1,23 +1,23 @@
-import Layout from '../layout/Layout';
+import Layout from '../layout/layout';
 import Link from 'next/link';
 
-  const PostLink = ({title}) => (
-    <li>
-      <Link href={`/post?title=${title}`}>
-        <a>{title}</a>
-      </Link>
-    </li>
-  );
+const PostLink = ({id}) => (
+  <li>
+    <Link href="/posts/[id]" as={`/posts/${id}`}>
+      <a>{id}</a>
+    </Link>
+  </li>
+);
 
-   const Blog = () => (
-      <Layout>
-        <h1>My Blog</h1>
-        <ul>
-          <PostLink title="Hello Next.js" />
-          <PostLink title="Learn Next.js is awesome" />
-          <PostLink title="Deploy apps with Zeit" />
-        </ul>
-      </Layout>
-    );
+const Blog = () => (
+  <Layout>
+    <h1>My Blog</h1>
+    <ul>
+      <PostLink id="Hello Next.js" />
+      <PostLink id="Learn Next.js" />
+      <PostLink id="Deploy apps" />
+    </ul>
+  </Layout>
+);
 
-  export default Blog
+export default Blog
