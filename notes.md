@@ -316,10 +316,10 @@ Once that's done, you can go ahead and do the following:
 - Add a folder called `posts` to the `pages` directory.
 - Within that `posts` folder add a file named `[id].js`.
 
-The bracking naming convention is as follows: 
+The bracket naming convention is as follows: 
 
 - Brackets instantly make the page a dynamic route.
-- File name within the brackers is simply a variable.
+- The file name within the brackets is simply a variable.
 - Whatever name you place within the bracket represents the query parameter for that page.
 
 Let's add some code to the `[id].js` file: 
@@ -341,6 +341,7 @@ Let's add some code to the `[id].js` file:
 
   export default Post
 ```
+
 In order to make use of our dynamic route, we need to change a few things. Head back into the `index.js`, remove its contents and add the following: 
 
 ```js
@@ -372,9 +373,7 @@ In order to make use of our dynamic route, we need to change a few things. Head 
 We essentialy have the same code as before with the exception of a few changes. 
 
 - The `href` value in the `Link` component now takes the path of our dynamic route page.
-
 - The parameter for the `query` string and the contents of the `<a>` tag take in the `id`.
-
 - We use the `as` prop which is apart of the Router API to define the route that gets displayed as the browser URL.
 
 ```js
